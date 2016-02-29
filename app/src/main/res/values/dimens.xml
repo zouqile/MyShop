@@ -4,4 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="layout_head_high">30dp</dimen>
     <dimen name="head_title_text_size">20dp</dimen>
+    <dimen name="main_menu_high">55dp</dimen>
+    <dimen name="home_slip_high">120dp</dimen>
+    <dimen name="home_slip_round_size">10dp</dimen>
 </resources>

@@ -1,9 +1,76 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.myshop.fragment.HomeFragment">
 
-    <include layout="@layout/layout_head_home"/>
+    <include
+        android:id="@+id/include_layout_head_home"
+        layout="@layout/layout_head_home" />
 
-</FrameLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/include_layout_head_home"
+        android:layout_marginBottom="@dimen/main_menu_high">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/home_slip_high">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/home_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"></android.support.v4.view.ViewPager>
+
+                <LinearLayout
+                    android:id="@+id/home_slip_linearlayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|bottom">
+
+                    <ImageView
+                        android:id="@+id/home_slip_round_img1"
+                        android:layout_width="@dimen/home_slip_round_size"
+                        android:layout_height="@dimen/home_slip_round_size"
+                        android:src="@mipmap/main_slip_defaule_bg" />
+
+                    <ImageView
+                        android:id="@+id/home_slip_round_img2"
+                        android:layout_width="@dimen/home_slip_round_size"
+                        android:layout_height="@dimen/home_slip_round_size"
+                        android:src="@mipmap/main_slip_defaule_bg" />
+
+                    <ImageView
+                        android:id="@+id/home_slip_round_img3"
+                        android:layout_width="@dimen/home_slip_round_size"
+                        android:layout_height="@dimen/home_slip_round_size"
+                        android:src="@mipmap/main_slip_defaule_bg" />
+
+                    <ImageView
+                        android:id="@+id/home_slip_round_img4"
+                        android:layout_width="@dimen/home_slip_round_size"
+                        android:layout_height="@dimen/home_slip_round_size"
+                        android:src="@mipmap/main_slip_defaule_bg" />
+
+                    <ImageView
+                        android:id="@+id/home_slip_round_img5"
+                        android:layout_width="@dimen/home_slip_round_size"
+                        android:layout_height="@dimen/home_slip_round_size"
+                        android:src="@mipmap/main_slip_defaule_bg" />
+
+                </LinearLayout>
+            </FrameLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>
