@@ -2,26 +2,31 @@ package com.example.myshop.fragment;
 
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.ImageView;
 
 import com.example.myshop.R;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 /**
  * 首页
  */
-public class HomeFragment extends Fragment implements ViewPager.OnPageChangeListener {
+public class HomeFragment extends Fragment {
 
     private ViewPager viewpager;
     private ArrayList<ImageView> roundViews = new ArrayList<>();
     private ArrayList<ImageView> imgViews = new ArrayList<>();
+    private AutoSlipHandler handler;
     //自定义轮播图的资源ID
     private int[] imagesResIds;
 
@@ -50,48 +55,70 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         };
         for (int imgId : imagesResIds) {
             ImageView imageView = new ImageView(getActivity());////查看是否有问题
-            imageView.setImageResource(imgId);
+            imageView.setImageResource(imgId);//如果是网络获取的设设置bitmap
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imgViews.add(imageView);
         }
-        roundViews.get(imgIndex).setImageResource(R.mipmap.main_slip_focus_bg);
         viewpager.setAdapter(new SlipPagerAdapter(imgViews));
-        viewpager.addOnPageChangeListener(this);
+        handler = new AutoSlipHandler(new WeakReference<HomeFragment>(this));
+        int currentItem = (Integer.MAX_VALUE / 2) - ((Integer.MAX_VALUE / 2) % 5);
+        viewpager.setCurrentItem(currentItem);//默认在中间，使用户看不到边界
+        imgIndex = getImgIndex(currentItem);
+        roundViews.get(imgIndex).setImageResource(R.mipmap.main_slip_focus_bg);
+        handler.sendMessage(handler.obtainMessage(AutoSlipHandler.MSG_PAGE_CHANGED, currentItem, 0));
+        addOnPageChangeListener();
+        //开始轮播效果
+        handler.sendEmptyMessage(AutoSlipHandler.MSG_START_SLIP);
         return view;
     }
 
+    private void addOnPageChangeListener() {
+        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            @Override
+            public void onPageSelected(int position) {
+                handler.sendMessage(handler.obtainMessage(AutoSlipHandler.MSG_PAGE_CHANGED, position, 0));
+                int nowImgIndex = getImgIndex(position);
+                if (imgIndex != nowImgIndex) {
+                    roundViews.get(imgIndex).setImageResource(R.mipmap.main_slip_defaule_bg);
+                    roundViews.get(nowImgIndex).setImageResource(R.mipmap.main_slip_focus_bg);
+                    imgIndex = nowImgIndex;
+                }
+            }
 
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                switch (state) {
+                    case ViewPager.SCROLL_STATE_IDLE://0:// 滑动结束，即切换完毕或者加载完毕
+                        handler.sendEmptyMessageDelayed(AutoSlipHandler.MSG_UPDATE_IMAGE, AutoSlipHandler.TIME_DELAY);
+                        break;
+                    case ViewPager.SCROLL_STATE_DRAGGING://1:// 手势滑动，空闲中
+                        handler.sendEmptyMessage(AutoSlipHandler.MSG_STOP_SLIP);//暂停轮播
+                        break;
+                    case ViewPager.SCROLL_STATE_SETTLING://2:// 界面切换中
 
+                        break;
+                }
+
+            }
+        });
     }
+
 
     private int imgIndex = 0;
 
-    @Override
-    public void onPageSelected(int position) {
-        if (imgIndex != position) {
-            roundViews.get(imgIndex).setImageResource(R.mipmap.main_slip_defaule_bg);
-            roundViews.get(position).setImageResource(R.mipmap.main_slip_focus_bg);
-            imgIndex = position;
+    //根据当前页面的位置计算img的位置
+    private int getImgIndex(int pagePosition) {
+        pagePosition %= imgViews.size();
+        if (pagePosition < 0) {
+            pagePosition = imgViews.size() + pagePosition;
         }
+        return pagePosition;
     }
 
-    @Override
-    public void onPageScrollStateChanged(int state) {
-        switch (state) {
-            case ViewPager.SCROLL_STATE_IDLE://0:// 滑动结束，即切换完毕或者加载完毕
-                // 当前为最后一张，此时从右向左滑，则切换到第一张
-                break;
-            case ViewPager.SCROLL_STATE_DRAGGING://1:// 手势滑动，空闲中
-
-                break;
-            case ViewPager.SCROLL_STATE_SETTLING://2:// 界面切换中
-                break;
-        }
-
-    }
 
     private static class SlipPagerAdapter extends PagerAdapter {
 
@@ -103,22 +130,32 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            ((ViewPager) container).removeView(imgViews.get(position));
+            //Warning：不要在这里调用removeView
         }
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            ((ViewPager) container).addView(imgViews.get(position));
-            return imgViews.get(position);
+            //对ViewPager页号求模取出View列表中要显示的项
+            position %= imgViews.size();
+            if (position < 0) {
+                position = imgViews.size() + position;
+            }
+            ImageView view = imgViews.get(position);
+            //如果View已经在之前添加到了一个父组件，则必须先remove，否则会抛出IllegalStateException。
+            ViewParent vp = view.getParent();
+            if (vp != null) {
+                ViewGroup parent = (ViewGroup) vp;
+                parent.removeView(view);
+            }
+            container.addView(view);
+            //add listeners here if necessary
+            return view;
         }
 
         @Override
         public int getCount() {
-            if (null == imgViews) {
-                return 0;
-            } else {
-                return imgViews.size();
-            }
+            //设置成最大，使用户看不到边界
+            return Integer.MAX_VALUE;
         }
 
         @Override
@@ -127,4 +164,70 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         }
     }
 
+
+    private static class AutoSlipHandler extends Handler {
+
+        /**
+         * 请求更新显示的View。
+         */
+        private static final int MSG_UPDATE_IMAGE = 1;
+        /**
+         * 请求暂停轮播。
+         */
+        private static final int MSG_STOP_SLIP = 2;
+        /**
+         * 请求恢复轮播。
+         */
+        private static final int MSG_START_SLIP = 3;
+        /**
+         * 记录最新的页号，当用户手动滑动时需要记录新页号，否则会使轮播的页面出错。
+         * 例如当前如果在第一页，本来准备播放的是第二页，而这时候用户滑动到了末页，
+         * 则应该播放的是第一页，如果继续按照原来的第二页播放，则逻辑上有问题。
+         */
+        private static final int MSG_PAGE_CHANGED = 4;
+        //轮播间隔时间
+        private static final long TIME_DELAY = 3000;
+        private int currentItem = 0;
+
+        //使用弱引用避免Handler泄露.这里的泛型参数可以不是Activity，也可以是Fragment等
+        private WeakReference<HomeFragment> weakReference;
+
+        protected AutoSlipHandler(WeakReference<HomeFragment> wk) {
+            weakReference = wk;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            HomeFragment fragment = weakReference.get();
+            if (fragment == null) {
+                //Activity已经回收，无需再处理UI了
+                return;
+            }
+            //检查消息队列并移除未发送的消息，这主要是避免在复杂环境下消息出现重复等问题。
+            if (fragment.handler.hasMessages(MSG_UPDATE_IMAGE)) {
+                fragment.handler.removeMessages(MSG_UPDATE_IMAGE);
+            }
+            switch (msg.what) {
+                case MSG_UPDATE_IMAGE:
+                    currentItem++;
+                    fragment.viewpager.setCurrentItem(currentItem);
+                    //准备下次播放
+                    fragment.handler.sendEmptyMessageDelayed(MSG_UPDATE_IMAGE, TIME_DELAY);
+                    break;
+                case MSG_STOP_SLIP:
+                    //只要不发送消息就暂停了
+                    break;
+                case MSG_START_SLIP:
+                    fragment.handler.sendEmptyMessageDelayed(MSG_UPDATE_IMAGE, TIME_DELAY);
+                    break;
+                case MSG_PAGE_CHANGED:
+                    //记录当前的页号，避免播放的时候页面显示不正确。
+                    currentItem = msg.arg1;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }
