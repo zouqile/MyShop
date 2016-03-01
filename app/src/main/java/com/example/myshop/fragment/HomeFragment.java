@@ -1,6 +1,8 @@
 package com.example.myshop.fragment;
 
 
+import android.app.Activity;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,7 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.myshop.R;
 
@@ -27,6 +33,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<ImageView> roundViews = new ArrayList<>();
     private ArrayList<ImageView> imgViews = new ArrayList<>();
     private AutoSlipHandler handler;
+    private GridView gridviewMenu;
     //自定义轮播图的资源ID
     private int[] imagesResIds;
 
@@ -41,6 +48,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         viewpager = (ViewPager) view.findViewById(R.id.home_viewpager);
+        gridviewMenu = (GridView) view.findViewById(R.id.home_menu_gridview);
         roundViews.add((ImageView) view.findViewById(R.id.home_slip_round_img1));
         roundViews.add((ImageView) view.findViewById(R.id.home_slip_round_img2));
         roundViews.add((ImageView) view.findViewById(R.id.home_slip_round_img3));
@@ -66,13 +74,14 @@ public class HomeFragment extends Fragment {
         imgIndex = getImgIndex(currentItem);
         roundViews.get(imgIndex).setImageResource(R.mipmap.main_slip_focus_bg);
         handler.sendMessage(handler.obtainMessage(AutoSlipHandler.MSG_PAGE_CHANGED, currentItem, 0));
-        addOnPageChangeListener();
+        addEvent();
         //开始轮播效果
         handler.sendEmptyMessage(AutoSlipHandler.MSG_START_SLIP);
+        gridviewMenu.setAdapter(new GridMenuAdapter(getActivity()));
         return view;
     }
 
-    private void addOnPageChangeListener() {
+    private void addEvent() {
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -105,8 +114,15 @@ public class HomeFragment extends Fragment {
 
             }
         });
-    }
 
+        gridviewMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+            }
+        });
+    }
 
     private int imgIndex = 0;
 
@@ -120,6 +136,7 @@ public class HomeFragment extends Fragment {
     }
 
 
+    //广告pager适配器
     private static class SlipPagerAdapter extends PagerAdapter {
 
         private ArrayList<ImageView> imgViews;
@@ -165,6 +182,7 @@ public class HomeFragment extends Fragment {
     }
 
 
+    //处理自动广告
     private static class AutoSlipHandler extends Handler {
 
         /**
@@ -228,6 +246,62 @@ public class HomeFragment extends Fragment {
                 default:
                     break;
             }
+        }
+    }
+
+    //menu的gridview的适配器
+    private static class GridMenuAdapter extends BaseAdapter {
+
+        private Activity activity;
+
+        public GridMenuAdapter(Activity _activity) {
+            activity = _activity;
+            initData();
+        }
+
+        private void initData() {
+            res = new int[]{R.mipmap.home_menu_market,
+                    R.mipmap.home_menu_hot,
+                    R.mipmap.home_menu_vip,
+                    R.mipmap.home_menu_else
+            };
+            Resources resources = activity.getResources();
+            strs = new String[]{resources.getString(R.string.home_menu_market),
+                    resources.getString(R.string.home_menu_hot),
+                    resources.getString(R.string.home_menu_vip),
+                    resources.getString(R.string.home_menu_else)
+            };
+        }
+
+        //资源没有从网络获取
+        private int[] res;
+        private String[] strs;
+
+        @Override
+        public int getCount() {
+            return res.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return strs[position];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        //只有四个，没用holder
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater layoutInflater = activity.getLayoutInflater();
+            View view = layoutInflater.inflate(R.layout.item_home_menu_gridview, null);
+            ImageView imageView = (ImageView) view.findViewById(R.id.home_menu_img);
+            TextView textView = (TextView) view.findViewById(R.id.home_menu_tv);
+            imageView.setImageResource(res[position]);
+            textView.setText(strs[position]);
+            return view;
         }
     }
 }
