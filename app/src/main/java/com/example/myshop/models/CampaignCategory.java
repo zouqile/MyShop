@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * Created by zouqile on 2016-03-01.
- * 一个活动的分类
+ * 首页一个活动的分类
  */
 public class CampaignCategory implements Serializable {
 

@@ -22,8 +22,4 @@ public abstract class ListCampaignCategoryCallBack extends Callback<List<Campaig
         return list;
     }
 
-    @Override
-    public void onResponse(List<CampaignCategory> response) {
-
-    }
 }

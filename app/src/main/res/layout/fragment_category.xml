@@ -1,13 +1,35 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.myshop.fragment.CategoryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <include
+        android:id="@+id/include_layout_head_category"
+        layout="@layout/layout_head_category" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="CategoryFragment" />
+        android:layout_below="@+id/include_layout_head_category"
+        android:layout_marginBottom="@dimen/main_menu_high"
+        android:orientation="horizontal">
 
-</FrameLayout>
+        <com.example.myshop.view.CategoryMenuListView
+            android:id="@+id/categorymenu_listview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/include_layout_head_home"
+            android:layout_weight="4"
+            android:scrollbars="none" />
+
+        <FrameLayout
+            android:id="@+id/lin_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></FrameLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

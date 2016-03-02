@@ -2,8 +2,6 @@ package com.example.myshop.fragment;
 
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,18 +23,16 @@ import android.widget.TextView;
 import com.example.myshop.R;
 import com.example.myshop.adapter.HomeCatgoryRecyclerAdapter;
 import com.example.myshop.callback.ListCampaignCategoryCallBack;
-import com.example.myshop.common.Contants;
 import com.example.myshop.common.WrappingLinearLayoutManager;
 import com.example.myshop.models.CampaignCard;
 import com.example.myshop.models.CampaignCategory;
-import com.zhy.http.okhttp.OkHttpUtils;
+import com.example.myshop.service.ItemService;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Response;
 
 /**
  * 首页
@@ -49,6 +45,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<ImageView> imgViews = new ArrayList<>();
     private AutoSlipHandler handler;
     private GridView gridviewMenu;
+    private ItemService itemService;
     //自定义轮播图的资源ID
     private int[] imagesResIds;
     private int imgIndex = 0;//轮播的图片的位置，最大是size
@@ -65,6 +62,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        itemService = new ItemService(this.getActivity());
         viewpager = (ViewPager) view.findViewById(R.id.home_viewpager);
         recyclerView = (RecyclerView) view.findViewById(R.id.home_recyclerview);
         gridviewMenu = (GridView) view.findViewById(R.id.home_menu_gridview);
@@ -147,20 +145,16 @@ public class HomeFragment extends Fragment {
     private void initRecyclerView() {
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setHasFixedSize(false);
-        OkHttpUtils.get()
-                .url(Contants.API.CAMPAIGN_HOME)
-                .build()
-                .execute(new ListCampaignCategoryCallBack() {
-                    @Override
-                    public void onError(Call call, Exception e) {
+        itemService.CallCampaignCategoryList(new ListCampaignCategoryCallBack() {
+            @Override
+            public void onError(Call call, Exception e) {
+            }
 
-                    }
-
-                    @Override
-                    public void onResponse(List<CampaignCategory> response) {
-                        initRecyclerViewData(response);
-                    }
-                });
+            @Override
+            public void onResponse(List<CampaignCategory> response) {
+                initRecyclerViewData(response);
+            }
+        });
     }
 
     private void initRecyclerViewData(List<CampaignCategory> homeCampaigns) {

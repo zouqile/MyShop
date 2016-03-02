@@ -94,7 +94,6 @@ public class HomeCatgoryRecyclerAdapter extends RecyclerView.Adapter<HomeCatgory
             imageViewBig = (ImageView) itemView.findViewById(R.id.home_cardview_imgview_big);
             imageViewSmallTop = (ImageView) itemView.findViewById(R.id.home_cardview_imgview_small_top);
             imageViewSmallBottom = (ImageView) itemView.findViewById(R.id.home_cardview_imgview_small_bottom);
-
             imageViewBig.setOnClickListener(this);
             imageViewSmallTop.setOnClickListener(this);
             imageViewSmallBottom.setOnClickListener(this);
@@ -141,6 +140,5 @@ public class HomeCatgoryRecyclerAdapter extends RecyclerView.Adapter<HomeCatgory
     //点击响应活动卡片接口
     public interface OnCampaignCardClickListener {
         void onClick(View view, CampaignCard campaign);
-
     }
 }
