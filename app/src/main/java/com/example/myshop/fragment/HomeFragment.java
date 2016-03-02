@@ -2,6 +2,8 @@ package com.example.myshop.fragment;
 
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +11,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +23,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myshop.R;
+import com.example.myshop.adapter.HomeCatgoryRecyclerAdapter;
+import com.example.myshop.callback.ListCampaignCategoryCallBack;
+import com.example.myshop.common.Contants;
+import com.example.myshop.common.WrappingLinearLayoutManager;
+import com.example.myshop.models.CampaignCard;
+import com.example.myshop.models.CampaignCategory;
+import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * 首页
+ * 这个类太多代码了！！
  */
 public class HomeFragment extends Fragment {
 
@@ -36,6 +51,9 @@ public class HomeFragment extends Fragment {
     private GridView gridviewMenu;
     //自定义轮播图的资源ID
     private int[] imagesResIds;
+    private int imgIndex = 0;//轮播的图片的位置，最大是size
+    private RecyclerView recyclerView;
+    private HomeCatgoryRecyclerAdapter recyclerAdapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -48,6 +66,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         viewpager = (ViewPager) view.findViewById(R.id.home_viewpager);
+        recyclerView = (RecyclerView) view.findViewById(R.id.home_recyclerview);
         gridviewMenu = (GridView) view.findViewById(R.id.home_menu_gridview);
         roundViews.add((ImageView) view.findViewById(R.id.home_slip_round_img1));
         roundViews.add((ImageView) view.findViewById(R.id.home_slip_round_img2));
@@ -78,6 +97,7 @@ public class HomeFragment extends Fragment {
         //开始轮播效果
         handler.sendEmptyMessage(AutoSlipHandler.MSG_START_SLIP);
         gridviewMenu.setAdapter(new GridMenuAdapter(getActivity()));
+        initRecyclerView();
         return view;
     }
 
@@ -124,7 +144,47 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private int imgIndex = 0;
+    private void initRecyclerView() {
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setHasFixedSize(false);
+        OkHttpUtils.get()
+                .url(Contants.API.CAMPAIGN_HOME)
+                .build()
+                .execute(new ListCampaignCategoryCallBack() {
+                    @Override
+                    public void onError(Call call, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(List<CampaignCategory> response) {
+                        initRecyclerViewData(response);
+                    }
+                });
+    }
+
+    private void initRecyclerViewData(List<CampaignCategory> homeCampaigns) {
+        recyclerAdapter = new HomeCatgoryRecyclerAdapter(homeCampaigns, getActivity());
+
+        recyclerAdapter.setOnCampaignClickListener(new HomeCatgoryRecyclerAdapter.OnCampaignCardClickListener() {
+            @Override
+            public void onClick(View view, CampaignCard campaign) {
+
+//                Intent intent = new Intent(getActivity(), WareListActivity.class);
+//                intent.putExtra(Contants.COMPAINGAIN_ID, campaign.getId());
+//
+//                startActivity(intent);
+
+            }
+        });
+
+        recyclerView.setAdapter(recyclerAdapter);
+
+        //recyclerView.addItemDecoration(new CardViewtemDecortion());//添加分割线
+
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        recyclerView.setLayoutManager(new WrappingLinearLayoutManager(getContext()));
+    }
 
     //根据当前页面的位置计算img的位置
     private int getImgIndex(int pagePosition) {
@@ -134,7 +194,6 @@ public class HomeFragment extends Fragment {
         }
         return pagePosition;
     }
-
 
     //广告pager适配器
     private static class SlipPagerAdapter extends PagerAdapter {
@@ -180,7 +239,6 @@ public class HomeFragment extends Fragment {
             return view == object;
         }
     }
-
 
     //处理自动广告
     private static class AutoSlipHandler extends Handler {
@@ -304,4 +362,5 @@ public class HomeFragment extends Fragment {
             return view;
         }
     }
+
 }
