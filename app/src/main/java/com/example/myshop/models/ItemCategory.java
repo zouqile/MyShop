@@ -40,5 +40,4 @@ public class ItemCategory implements Serializable {
         this.name = name;
     }
 
-
 }

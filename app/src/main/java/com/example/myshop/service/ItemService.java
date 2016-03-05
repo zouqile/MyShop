@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.myshop.callback.ListCampaignCategoryCallBack;
 import com.example.myshop.callback.ListItemCategoryCallBack;
 import com.example.myshop.common.Contants;
+import com.example.myshop.common.ServiceUrl;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class ItemService {
     public void CallCampaignCategoryList(ListCampaignCategoryCallBack callBack) {
         OkHttpUtils.get()
                 .url(Contants.API.CAMPAIGN_HOME)
+                        //.url(ServiceUrl.HOME_COMPAIGIN)
                 .build()
                 .execute(callBack);
 

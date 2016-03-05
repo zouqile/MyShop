@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.example.myshop.R;
 import com.example.myshop.models.CampaignCard;
 import com.example.myshop.models.CampaignCategory;
-import com.squareup.picasso.Picasso;
+import com.example.myshop.service.LoadImgService;
 
 import java.util.List;
 
@@ -30,6 +30,7 @@ public class HomeCatgoryRecyclerAdapter extends RecyclerView.Adapter<HomeCatgory
     private List<CampaignCategory> mDatas;
     private LayoutInflater mInflater;
     private Context mContext;
+    private LoadImgService imgService;
 
 
     public HomeCatgoryRecyclerAdapter() {
@@ -38,6 +39,7 @@ public class HomeCatgoryRecyclerAdapter extends RecyclerView.Adapter<HomeCatgory
     public HomeCatgoryRecyclerAdapter(List<CampaignCategory> datas, Context context) {
         mDatas = datas;
         this.mContext = context;
+        imgService=new LoadImgService(this.mContext);
     }
 
     public void setOnCampaignClickListener(OnCampaignCardClickListener listener) {
@@ -58,9 +60,9 @@ public class HomeCatgoryRecyclerAdapter extends RecyclerView.Adapter<HomeCatgory
         CampaignCategory homeCampaign = mDatas.get(position);
         holder.textTitle.setText(homeCampaign.getTitle());
 
-        Picasso.with(mContext).load(homeCampaign.getCpOne().getImgUrl()).into(holder.imageViewBig);
-        Picasso.with(mContext).load(homeCampaign.getCpTwo().getImgUrl()).into(holder.imageViewSmallTop);
-        Picasso.with(mContext).load(homeCampaign.getCpThree().getImgUrl()).into(holder.imageViewSmallBottom);
+        imgService.LoadImg(holder.imageViewBig, homeCampaign.getCpOne().getImgUrl());
+        imgService.LoadImg(holder.imageViewSmallTop,homeCampaign.getCpTwo().getImgUrl());
+        imgService.LoadImg(holder.imageViewSmallBottom,homeCampaign.getCpThree().getImgUrl());
     }
 
     @Override

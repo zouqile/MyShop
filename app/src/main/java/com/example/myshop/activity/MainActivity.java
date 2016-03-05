@@ -8,6 +8,8 @@ import android.widget.RadioButton;
 
 import com.example.myshop.R;
 import com.example.myshop.adapter.MainFragmentAdapter;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
     private ViewPager viewPager;
@@ -18,7 +20,19 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        init();
         initView();
+    }
+
+    private void init() {
+        ImageLoaderConfiguration configuration = new ImageLoaderConfiguration.Builder(getApplicationContext())
+                .memoryCacheSizePercentage(20)//内存占用20%
+                .diskCacheFileCount(100)//保存的数量
+                .diskCacheSize(5 * 1024 * 1024)
+                        //.defaultDisplayImageOptions(DisplayImageOptions.createSimple())//显示的状态,可以圆角等
+                        //  .defaultDisplayImageOptions(options)
+                .build();
+        ImageLoader.getInstance().init(configuration);
     }
 
     private void initView() {
