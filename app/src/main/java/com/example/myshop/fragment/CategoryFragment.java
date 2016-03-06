@@ -3,6 +3,7 @@ package com.example.myshop.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,9 +19,11 @@ import android.widget.Toast;
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.example.myshop.R;
+import com.example.myshop.activity.WareDetailActivity;
 import com.example.myshop.adapter.CategoryWareRecyclerAdapter;
 import com.example.myshop.callback.ListWareCallBack;
 import com.example.myshop.callback.ListWareCategoryCallBack;
+import com.example.myshop.common.Contants;
 import com.example.myshop.models.Ware;
 import com.example.myshop.models.WareCategory;
 import com.example.myshop.service.WareService;
@@ -63,14 +66,24 @@ public class CategoryFragment extends Fragment {
         recyclerview.setAdapter(wareAdapter);
         listView.setAdapter(adapter);
         // wareAdapter=new CategoryWareRecyclerAdapter(this);
-        initMenu();
         initEvent();
+        initMenu();
         initRefreshLayout();
         refreshData();//第一次加载商品数据
         return view;
     }
 
     private void initEvent() {
+        wareAdapter.setOnWareClickListener(new CategoryWareRecyclerAdapter.OnWareClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Ware ware = wareAdapter.getItem(position);
+                Intent intent = new Intent(getActivity().getApplicationContext(), WareDetailActivity.class);
+                intent.putExtra(Contants.WARE, ware);
+                startActivity(intent);
+            }
+        });
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -83,6 +96,7 @@ public class CategoryFragment extends Fragment {
                 adapter.setIndex(position);
             }
         });
+
     }
 
     private void initMenu() {

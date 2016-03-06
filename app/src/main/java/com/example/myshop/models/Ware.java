@@ -54,4 +54,15 @@ public class Ware implements Serializable {
     public void setPrice(Float price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Ware{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

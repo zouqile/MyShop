@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myshop.R;
+import com.example.myshop.models.CampaignCard;
 import com.example.myshop.models.Ware;
 import com.example.myshop.service.LoadImgService;
 
@@ -28,6 +29,12 @@ public class CategoryWareRecyclerAdapter extends RecyclerView.Adapter<CategoryWa
     private long category_id = 1;
     private int currPage = 1;
     private int totalPage = 2;
+    private OnWareClickListener onWareClickListener;
+
+
+    public void setOnWareClickListener(OnWareClickListener onWareClickListener) {
+        this.onWareClickListener = onWareClickListener;
+    }
 
     public List<Ware> getWares() {
         return wares;
@@ -79,8 +86,8 @@ public class CategoryWareRecyclerAdapter extends RecyclerView.Adapter<CategoryWa
     }
 
     public CategoryWareRecyclerAdapter() {
-
     }
+
 
     public CategoryWareRecyclerAdapter(List<Ware> datas, Context context) {
         wares = datas;
@@ -91,7 +98,8 @@ public class CategoryWareRecyclerAdapter extends RecyclerView.Adapter<CategoryWa
     @Override
     public CatgoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mInflater = LayoutInflater.from(parent.getContext());
-        return new CatgoryViewHolder(mInflater.inflate(R.layout.item_category_ware, parent, false));
+        View WareView = mInflater.inflate(R.layout.item_category_ware, parent, false);
+        return new CatgoryViewHolder(WareView, onWareClickListener);
     }
 
     @Override
@@ -107,17 +115,35 @@ public class CategoryWareRecyclerAdapter extends RecyclerView.Adapter<CategoryWa
         return wares.size();
     }
 
-    static class CatgoryViewHolder extends RecyclerView.ViewHolder {
+    public Ware getItem(int position) {
+        return wares.get(position);
+    }
+
+    public static interface OnWareClickListener {
+        void onClick(View view, int position);
+    }
+
+    static class CatgoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView img;
         private TextView title;
         private TextView price;
+        private OnWareClickListener clickListener;
 
-        public CatgoryViewHolder(View itemView) {
+        public CatgoryViewHolder(View itemView, OnWareClickListener clickListener) {
             super(itemView);
+            this.clickListener=clickListener;
+            itemView.setOnClickListener(this);
             img = (ImageView) itemView.findViewById(R.id.category_ware_item_img);
             title = (TextView) itemView.findViewById(R.id.category_ware_item_title);
             price = (TextView) itemView.findViewById(R.id.category_ware_item_price);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (null != clickListener) {
+                clickListener.onClick(v, getLayoutPosition());
+            }
         }
     }
 }

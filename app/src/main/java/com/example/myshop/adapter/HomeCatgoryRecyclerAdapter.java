@@ -39,7 +39,7 @@ public class HomeCatgoryRecyclerAdapter extends RecyclerView.Adapter<HomeCatgory
     public HomeCatgoryRecyclerAdapter(List<CampaignCategory> datas, Context context) {
         mDatas = datas;
         this.mContext = context;
-        imgService=new LoadImgService(this.mContext);
+        imgService = new LoadImgService(this.mContext);
     }
 
     public void setOnCampaignClickListener(OnCampaignCardClickListener listener) {
@@ -61,8 +61,8 @@ public class HomeCatgoryRecyclerAdapter extends RecyclerView.Adapter<HomeCatgory
         holder.textTitle.setText(homeCampaign.getTitle());
 
         imgService.LoadImg(holder.imageViewBig, homeCampaign.getCpOne().getImgUrl());
-        imgService.LoadImg(holder.imageViewSmallTop,homeCampaign.getCpTwo().getImgUrl());
-        imgService.LoadImg(holder.imageViewSmallBottom,homeCampaign.getCpThree().getImgUrl());
+        imgService.LoadImg(holder.imageViewSmallTop, homeCampaign.getCpTwo().getImgUrl());
+        imgService.LoadImg(holder.imageViewSmallBottom, homeCampaign.getCpThree().getImgUrl());
     }
 
     @Override
@@ -140,7 +140,7 @@ public class HomeCatgoryRecyclerAdapter extends RecyclerView.Adapter<HomeCatgory
     }
 
     //点击响应活动卡片接口
-    public interface OnCampaignCardClickListener {
+    public static interface OnCampaignCardClickListener {
         void onClick(View view, CampaignCard campaign);
     }
 }
