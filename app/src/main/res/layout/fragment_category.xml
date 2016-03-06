@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,17 +18,40 @@
 
         <com.example.myshop.view.CategoryMenuListView
             android:id="@+id/categorymenu_listview"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="match_parent"
             android:layout_below="@+id/include_layout_head_home"
-            android:layout_weight="4"
             android:scrollbars="none" />
 
-        <FrameLayout
-            android:id="@+id/lin_fragment"
+        <View
+            android:layout_width="6dp"
+            android:layout_height="match_parent"
+            android:background="@color/category_menu_sel_bg" />
+
+        <com.cjj.MaterialRefreshLayout
+            android:id="@+id/category_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"></FrameLayout>
+            android:layout_marginTop="10dp"
+            app:overlay="false"
+            app:progress_colors="@array/material_colors"
+            app:progress_show_circle_backgroud="false"
+            app:wave_height_type="higher"
+            app:wave_show="false">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/category_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/category_menu_sel_bg">
+
+
+            </android.support.v7.widget.RecyclerView>
+
+
+        </com.cjj.MaterialRefreshLayout>
+
 
     </LinearLayout>
 

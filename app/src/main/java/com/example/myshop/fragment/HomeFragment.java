@@ -26,7 +26,7 @@ import com.example.myshop.callback.ListCampaignCategoryCallBack;
 import com.example.myshop.common.WrappingLinearLayoutManager;
 import com.example.myshop.models.CampaignCard;
 import com.example.myshop.models.CampaignCategory;
-import com.example.myshop.service.ItemService;
+import com.example.myshop.service.WareService;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<ImageView> imgViews = new ArrayList<>();
     private AutoSlipHandler handler;
     private GridView gridviewMenu;
-    private ItemService itemService;
+    private WareService wareService;
     //自定义轮播图的资源ID
     private int[] imagesResIds;
     private int imgIndex = 0;//轮播的图片的位置，最大是size
@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        itemService = new ItemService(this.getActivity());
+        wareService = new WareService(this.getActivity());
         viewpager = (ViewPager) view.findViewById(R.id.home_viewpager);
         recyclerView = (RecyclerView) view.findViewById(R.id.home_recyclerview);
         gridviewMenu = (GridView) view.findViewById(R.id.home_menu_gridview);
@@ -145,7 +145,7 @@ public class HomeFragment extends Fragment {
     private void initRecyclerView() {
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setHasFixedSize(false);
-        itemService.CallCampaignCategoryList(new ListCampaignCategoryCallBack() {
+        wareService.CallCampaignCategoryList(new ListCampaignCategoryCallBack() {
             @Override
             public void onError(Call call, Exception e) {
             }
@@ -302,7 +302,7 @@ public class HomeFragment extends Fragment {
     }
 
     //menu的gridview的适配器
-    private static class GridMenuAdapter extends BaseAdapter {
+    static class GridMenuAdapter extends BaseAdapter {
 
         private Activity activity;
 
@@ -355,6 +355,7 @@ public class HomeFragment extends Fragment {
             textView.setText(strs[position]);
             return view;
         }
+
     }
 
 }

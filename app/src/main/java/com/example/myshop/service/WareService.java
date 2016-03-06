@@ -3,24 +3,22 @@ package com.example.myshop.service;
 import android.content.Context;
 
 import com.example.myshop.callback.ListCampaignCategoryCallBack;
-import com.example.myshop.callback.ListItemCategoryCallBack;
+import com.example.myshop.callback.ListWareCallBack;
+import com.example.myshop.callback.ListWareCategoryCallBack;
 import com.example.myshop.common.Contants;
-import com.example.myshop.common.ServiceUrl;
 import com.zhy.http.okhttp.OkHttpUtils;
-
-import java.util.List;
 
 /**
  * Created by zouqile on 2016-03-02.
  * 商品的服务
  */
-public class ItemService {
+public class WareService {
     private Context context;
 
-    public ItemService() {
+    public WareService() {
     }
 
-    public ItemService(Context context) {
+    public WareService(Context context) {
         this.context = context;
     }
 
@@ -36,9 +34,16 @@ public class ItemService {
     }
 
     //获取类型的分类列表
-    public void CallItemCategoryList(ListItemCategoryCallBack callBack) {
+    public void CallWareCategoryList(ListWareCategoryCallBack callBack) {
         OkHttpUtils.get()
                 .url(Contants.API.CATEGORY_LIST)
+                .build()
+                .execute(callBack);
+    }
+
+    public void CallWareList(ListWareCallBack callBack, long categoryId, int currPage, int pageSize) {
+        OkHttpUtils.get()
+                .url(Contants.API.WARES_LIST + "?categoryId=" + categoryId + "&curPage=" + currPage + "&pageSize=" + pageSize)
                 .build()
                 .execute(callBack);
     }

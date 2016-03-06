@@ -6,16 +6,16 @@ import java.io.Serializable;
  * Created by zouqile on 2016-03-02.
  * 商品的分类（图书，家用电器等）
  */
-public class ItemCategory implements Serializable {
+public class WareCategory implements Serializable {
 
-    public ItemCategory() {
+    public WareCategory() {
     }
 
-    public ItemCategory(String name) {
+    public WareCategory(String name) {
         this.name = name;
     }
 
-    public ItemCategory(long id, String name) {
+    public WareCategory(long id, String name) {
         this.id = id;
         this.name = name;
     }

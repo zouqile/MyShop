@@ -1,6 +1,6 @@
 package com.example.myshop.callback;
 
-import com.example.myshop.models.ItemCategory;
+import com.example.myshop.models.WareCategory;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zhy.http.okhttp.callback.Callback;
@@ -12,11 +12,11 @@ import okhttp3.Response;
 /**
  * Created by zouqile on 2016-03-02.
  */
-public abstract class ListItemCategoryCallBack extends Callback<List<ItemCategory>> {
+public abstract class ListWareCategoryCallBack extends Callback<List<WareCategory>> {
     @Override
-    public List<ItemCategory> parseNetworkResponse(Response response) throws Exception {
+    public List<WareCategory> parseNetworkResponse(Response response) throws Exception {
         String string = response.body().string();
-        List<ItemCategory> list = new Gson().fromJson(string, new TypeToken<List<ItemCategory>>() {
+        List<WareCategory> list = new Gson().fromJson(string, new TypeToken<List<WareCategory>>() {
         }.getType());
         return list;
     }

@@ -23,4 +23,18 @@
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
+
+    <style name="category_item_ware_title">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">2</item>
+    </style>
+
+    <style name="category_item_ware_price">
+        <item name="android:textColor">@color/crimson</item>
+        <item name="android:textSize">10sp</item>
+
+    </style>
+
 </resources>
