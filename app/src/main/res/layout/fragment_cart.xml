@@ -1,13 +1,83 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.myshop.fragment.CartFragment">
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:id="@+id/fragment_cart_head"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="CartFragment" />
+        android:layout_height="@dimen/layout_head_high">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="购物车"
+            android:textColor="@color/head_title_text"
+            android:textSize="@dimen/head_title_text_size" />
+
+        <TextView
+            android:id="@+id/cart_tv_operate_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="编辑"
+            android:textSize="15dp" />
+    </RelativeLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/cart_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/cartfragment_sum_layout"
+        android:layout_below="@+id/fragment_cart_head"
+        android:layout_marginTop="10dp"
+        android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+
+    <RelativeLayout
+        android:id="@+id/cartfragment_sum_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/main_menu_high"
+        android:background="@color/default_stand_bg">
+
+        <CheckBox
+            android:id="@+id/cart_checkbox_all"
+            style="@style/cart_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:checked="true"
+            android:text="全选" />
+
+        <TextView
+            android:id="@+id/cart_tv_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/cart_checkbox_all"
+            android:text="合计"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/cart_btn_order"
+            style="@style/bigRedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:minHeight="50dp"
+            android:minWidth="100dp"
+            android:text="去结算" />
+    </RelativeLayout>
+</RelativeLayout>

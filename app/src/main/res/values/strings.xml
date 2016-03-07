@@ -11,4 +11,8 @@
     <string name="home_menu_hot">热门</string>
     <string name="home_menu_vip">会员中心</string>
     <string name="home_menu_else">其他</string>
+    <string name="cart_operate_edit">编辑</string>
+    <string name="cart_operate_edit_complete">完成</string>
+    <string name="cart_operate_buy">去结算</string>
+    <string name="cart_operate_del">删除</string>
 </resources>
