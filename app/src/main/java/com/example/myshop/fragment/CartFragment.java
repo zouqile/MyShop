@@ -31,7 +31,6 @@ public class CartFragment extends Fragment {
 
     private RecyclerView cartlistview;
     private CartAdapter cartAdapter;
-    private List<WareCart> carts;
     private TextView total_tv;
     private CheckBox checkbox_all;
     private TextView tv_operate_change;
@@ -56,18 +55,22 @@ public class CartFragment extends Fragment {
         btnOrder = (Button) view.findViewById(R.id.cart_btn_order);
         init();
         addEvent();
+        initData();
         return view;
     }
 
     private void init() {
         cartService = new CartService(getActivity());
-        carts = cartService.getAll();
-        cartAdapter = new CartAdapter(getActivity(), carts);
+        cartAdapter = new CartAdapter(getActivity());
         //cartlistview.setNestedScrollingEnabled(false);
         cartlistview.setHasFixedSize(false);
         cartlistview.setLayoutManager(new LinearLayoutManager(getContext()));
         cartlistview.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         cartlistview.setAdapter(cartAdapter);
+    }
+
+    private void initData() {
+        cartAdapter.setCarts(cartService.getAll());
     }
 
     private void changeOperate(int operate) {

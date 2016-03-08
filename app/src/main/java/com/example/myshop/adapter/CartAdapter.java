@@ -32,13 +32,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     private checkAllListener checkAllListener;
     private CartService cartService;
 
-    public CartAdapter(Context context, List<WareCart> carts) {
+    public CartAdapter(Context context) {
         this.mContext = context;
-        this.carts = carts;
-        notifyPriceChange();
+
         imgService = new LoadImgService(this.mContext);
         cartService = new CartService(this.mContext);
         addClickHandler();
+    }
+
+    public void setCarts(List<WareCart> carts) {
+        this.carts = carts;
+        notifyDataSetChanged();
+        notifyPriceChange();
     }
 
     public void setPriceListener(PriceListener priceListener) {
