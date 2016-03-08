@@ -1,13 +1,193 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.myshop.fragment.MineFragment">
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="MineFragment" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="170dp"
+                android:layout_marginTop="30dp">
+
+                <ImageView
+                    android:id="@+id/mime_head_img"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/me_head_circle" />
+
+                <TextView
+                    android:id="@+id/mine_tv_loginorreg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mime_head_img"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:text="注册   |   登录" />
+
+                <View
+                    android:id="@+id/mine_line_vertical"
+                    style="@style/line_vertical"
+                    android:layout_below="@+id/mine_tv_loginorreg"
+                    android:layout_marginTop="10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/mine_line_vertical"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@mipmap/me_wait_pay" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="代付款" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@mipmap/me_wait_send" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="待发货" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@mipmap/me_wait_get" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="代收/取货" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@mipmap/me_wait_cancel" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="退货/售后" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <View style="@style/line_vertical" />
+
+            <com.example.myshop.view.MineItemView
+                android:id="@+id/MineItemView_my_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="mineItemViewClick"
+                app:mimeItemImgSrc="@mipmap/me_my_order"
+                app:mimeItemTitle="我的订单" />
+
+            <com.example.myshop.view.MineItemView
+                android:id="@+id/MineItemView_shop_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="mineItemViewClick"
+                app:mimeItemImgSrc="@mipmap/me_shop_cart"
+                app:mimeItemTitle="购物车" />
+
+            <com.example.myshop.view.MineItemView
+                android:id="@+id/MineItemView_collection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="mineItemViewClick"
+                app:mimeItemImgSrc="@mipmap/me_collection"
+                app:mimeItemTitle="收藏" />
+
+            <com.example.myshop.view.MineItemView
+                android:id="@+id/MineItemView_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="mineItemViewClick"
+                app:mimeItemImgSrc="@mipmap/me_message"
+                app:mimeItemTitle="消息" />
+
+            <com.example.myshop.view.MineItemView
+                android:id="@+id/MineItemView_coupons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="mineItemViewClick"
+                app:mimeItemImgSrc="@mipmap/me_coupons"
+                app:mimeItemTitle="优惠劵" />
+
+            <com.example.myshop.view.MineItemView
+                android:id="@+id/MineItemView_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="mineItemViewClick"
+                app:mimeItemImgSrc="@mipmap/me_more"
+                app:mimeItemTitle="更多" />
+
+            <com.example.myshop.view.MineItemView
+                android:id="@+id/MineItemView_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="mineItemViewClick"
+                app:mimeItemImgSrc="@mipmap/me_service"
+                app:mimeItemTitle="客服" />
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
