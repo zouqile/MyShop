@@ -133,58 +133,51 @@
             <View style="@style/line_vertical" />
 
             <com.example.myshop.view.MineItemView
-                android:id="@+id/MineItemView_my_order"
+                android:id="@+id/mine_item_view_my_order"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="mineItemViewClick"
                 app:mimeItemImgSrc="@mipmap/me_my_order"
                 app:mimeItemTitle="我的订单" />
 
             <com.example.myshop.view.MineItemView
-                android:id="@+id/MineItemView_shop_cart"
+                android:id="@+id/mine_item_view_shop_cart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="mineItemViewClick"
                 app:mimeItemImgSrc="@mipmap/me_shop_cart"
                 app:mimeItemTitle="购物车" />
 
             <com.example.myshop.view.MineItemView
-                android:id="@+id/MineItemView_collection"
+                android:id="@+id/mine_item_view_collection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="mineItemViewClick"
                 app:mimeItemImgSrc="@mipmap/me_collection"
                 app:mimeItemTitle="收藏" />
 
             <com.example.myshop.view.MineItemView
-                android:id="@+id/MineItemView_message"
+                android:id="@+id/mine_item_view_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="mineItemViewClick"
                 app:mimeItemImgSrc="@mipmap/me_message"
                 app:mimeItemTitle="消息" />
 
             <com.example.myshop.view.MineItemView
-                android:id="@+id/MineItemView_coupons"
+                android:id="@+id/mine_item_view_coupons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="mineItemViewClick"
                 app:mimeItemImgSrc="@mipmap/me_coupons"
                 app:mimeItemTitle="优惠劵" />
 
             <com.example.myshop.view.MineItemView
-                android:id="@+id/MineItemView_more"
+                android:id="@+id/mine_item_view_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="mineItemViewClick"
                 app:mimeItemImgSrc="@mipmap/me_more"
                 app:mimeItemTitle="更多" />
 
             <com.example.myshop.view.MineItemView
-                android:id="@+id/MineItemView_service"
+                android:id="@+id/mine_item_view_service"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="mineItemViewClick"
                 app:mimeItemImgSrc="@mipmap/me_service"
                 app:mimeItemTitle="客服" />
 

@@ -15,4 +15,5 @@
     <string name="cart_operate_edit_complete">完成</string>
     <string name="cart_operate_buy">去结算</string>
     <string name="cart_operate_del">删除</string>
+    <string name="text_register">注册</string>
 </resources>
