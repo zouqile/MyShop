@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <com.cjj.MaterialRefreshLayout
+        android:id="@+id/find_content_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="@dimen/main_menu_high"
+        app:overlay="false"
+        app:progress_colors="@array/material_colors"
+        app:progress_show_circle_backgroud="false"
+        app:wave_height_type="higher"
+        app:wave_show="false">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/find_content_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+    </com.cjj.MaterialRefreshLayout>
+</LinearLayout>

@@ -13,6 +13,7 @@ import com.example.myshop.models.CampaignCard;
 import com.example.myshop.models.Ware;
 import com.example.myshop.service.LoadImgService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class CategoryWareRecyclerAdapter extends RecyclerView.Adapter<CategoryWareRecyclerAdapter.CatgoryViewHolder> {
 
-    private List<Ware> wares;
+    private List<Ware> wares = new ArrayList<>();
     private LayoutInflater mInflater;
     private Context mContext;
     private LoadImgService imgService;
@@ -132,7 +133,7 @@ public class CategoryWareRecyclerAdapter extends RecyclerView.Adapter<CategoryWa
 
         public CatgoryViewHolder(View itemView, OnWareClickListener clickListener) {
             super(itemView);
-            this.clickListener=clickListener;
+            this.clickListener = clickListener;
             itemView.setOnClickListener(this);
             img = (ImageView) itemView.findViewById(R.id.category_ware_item_img);
             title = (TextView) itemView.findViewById(R.id.category_ware_item_title);

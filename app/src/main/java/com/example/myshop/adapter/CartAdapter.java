@@ -17,6 +17,7 @@ import com.example.myshop.models.WareCart;
 import com.example.myshop.service.CartService;
 import com.example.myshop.service.LoadImgService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +35,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     public CartAdapter(Context context) {
         this.mContext = context;
-
         imgService = new LoadImgService(this.mContext);
         cartService = new CartService(this.mContext);
         addClickHandler();
@@ -182,7 +182,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     @Override
     public int getItemCount() {
-        return carts.size();
+        if (null == carts) {
+            return 0;
+        } else {
+            return carts.size();
+        }
     }
 
     public static interface PriceListener {
