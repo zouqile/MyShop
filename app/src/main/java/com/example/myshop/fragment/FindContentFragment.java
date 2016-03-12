@@ -81,10 +81,15 @@ public class FindContentFragment extends Fragment {
         });
     }
 
+    private boolean isInitData = true;
+
     public void setCagegory(int category_id) {
-        wareAdapter.setCategory_id(category_id);
-        wareAdapter.setCurrPage(1);
-        refreshData();
+        if (isInitData) {
+            wareAdapter.setCategory_id(category_id);
+            wareAdapter.setCurrPage(1);
+            refreshData();
+            isInitData = false;
+        }
     }
 
 

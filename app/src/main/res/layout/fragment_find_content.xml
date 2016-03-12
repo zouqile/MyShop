@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="@dimen/main_menu_high"
         app:overlay="false"
         app:progress_colors="@array/material_colors"
         app:progress_show_circle_backgroud="false"

@@ -11,8 +11,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/include_layout_head_home"
-        android:layout_marginBottom="@dimen/main_menu_high">
+        android:layout_below="@+id/include_layout_head_home">
 
         <LinearLayout
             android:layout_width="match_parent"

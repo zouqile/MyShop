@@ -24,7 +24,7 @@ import java.util.List;
  * Created by zouqile on 2016-03-07.
  */
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
-    private List<WareCart> carts;
+    private List<WareCart> carts = new ArrayList<>();
     private LayoutInflater mInflater;
     private Context mContext;
     private LoadImgService imgService;
@@ -56,6 +56,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
 
     public void checkAllChange(boolean check) {
+        if (carts == null) {
+            return;
+        }
         for (WareCart cart : carts) {
             cart.setIsChecked(check);
         }
@@ -64,6 +67,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 
     public void deleteSelete() {
+        if (carts == null) {
+            return;
+        }
         for (WareCart cart : carts) {
             if (cart.isChecked()) {
                 carts.remove(cart);
@@ -77,7 +83,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     private WareCart clickCart;
 
     private void checkChange() {
-        if (null == checkAllListener) {
+        if (null == checkAllListener || carts == null) {
             return;
         }
         int num = 0;

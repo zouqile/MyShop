@@ -138,26 +138,31 @@
                         android:text="精选" />
 
                     <RadioButton
+                        android:id="@+id/find_rb2"
                         style="@style/find_rb_type"
                         android:background="@drawable/selector_find_bg"
                         android:text="穿搭" />
 
                     <RadioButton
+                        android:id="@+id/find_rb3"
                         style="@style/find_rb_type"
                         android:background="@drawable/selector_find_bg"
                         android:text="智能" />
 
                     <RadioButton
+                        android:id="@+id/find_rb4"
                         style="@style/find_rb_type"
                         android:background="@drawable/selector_find_bg"
                         android:text="生活家" />
 
                     <RadioButton
+                        android:id="@+id/find_rb5"
                         style="@style/find_rb_type"
                         android:background="@drawable/selector_find_bg"
                         android:text="美妆" />
 
                     <RadioButton
+                        android:id="@+id/find_rb6"
                         style="@style/find_rb_type"
                         android:background="@drawable/selector_find_bg"
                         android:text="母婴" />

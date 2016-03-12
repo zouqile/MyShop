@@ -11,6 +11,9 @@ import com.example.myshop.adapter.MainFragmentAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
+/**
+ * 用viewpager实现的分页
+ */
 public class MainActivity extends FragmentActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
     private ViewPager viewPager;
     private RadioButton rb_home, rb_category, rb_find,
