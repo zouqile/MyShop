@@ -8,11 +8,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.HorizontalScrollView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.example.myshop.R;
 
@@ -23,7 +28,10 @@ public class FindFragment extends Fragment implements View.OnClickListener {
 
     private ViewPager viewPager;
     private FindPagerAdapter adapter;
-    private View hideView;
+    private RadioGroup radioGroup;
+    private HorizontalScrollView scrollView;
+    private int screenHalf = 0;
+    private View fragment_find_view;
 
     public FindFragment() {
         // Required empty public constructor
@@ -34,22 +42,53 @@ public class FindFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_find, container, false);
-        hideView = view.findViewById(R.id.find_hide_layout);
+        fragment_find_view = view;
+        scrollView = (HorizontalScrollView) view.findViewById(R.id.find_hscrollview);
+        radioGroup = (RadioGroup) view.findViewById(R.id.find_rg);
         viewPager = (ViewPager) view.findViewById(R.id.find_viewpager);
         adapter = new FindPagerAdapter(getFragmentManager());
         viewPager.setAdapter(adapter);
         view.findViewById(R.id.find_rb1).setOnClickListener(this);
+        initEvent();
+        screenHalf = getScreenHalf();
         return view;
     }
+
+
+    private FindContentFragment findContentFragment;
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.find_rb1:
-                FindContentFragment findContentFragment = (FindContentFragment) adapter.getItem(1);
+                findContentFragment = (FindContentFragment) adapter.getItem(1);
                 findContentFragment.setCagegory(1);
                 break;
         }
+    }
+
+    private int getScreenHalf() {
+        Display d = getActivity().getWindowManager().getDefaultDisplay();
+        DisplayMetrics dm = new DisplayMetrics();
+        d.getMetrics(dm);
+        return d.getWidth() / 2;//屏幕宽度的一半
+    }
+
+
+    private void initEvent() {
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int scrollX = scrollView.getScrollX();//当前scrollView的位置
+                System.out.println("scrollX----->" + scrollX);
+                RadioButton rb = (RadioButton) fragment_find_view.findViewById(checkedId);
+                System.out.println("checkedId----->" + checkedId);
+                int left = rb.getLeft();//相对父控件的左边位置
+                System.out.println("left----->" + left);
+                int leftScreen = left - scrollX;
+                scrollView.smoothScrollBy((leftScreen - screenHalf + rb.getWidth() / 2), 0);
+            }
+        });
     }
 
 

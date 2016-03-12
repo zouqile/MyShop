@@ -120,11 +120,13 @@
             <View style="@style/line_vertical" />
 
             <HorizontalScrollView
+                android:id="@+id/find_hscrollview"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:scrollbars="none">
 
                 <RadioGroup
+                    android:id="@+id/find_rg"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:orientation="horizontal">
