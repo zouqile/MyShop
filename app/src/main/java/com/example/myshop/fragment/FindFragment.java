@@ -1,26 +1,21 @@
 package com.example.myshop.fragment;
 
 
-import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.HorizontalScrollView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.myshop.R;
-import com.example.myshop.adapter.MainFragmentAdapter;
 
 /**
  * 发现
@@ -33,6 +28,12 @@ public class FindFragment extends Fragment implements View.OnClickListener {
     private HorizontalScrollView scrollView;
     private int screenHalf = 0;
     private View fragment_find_view;
+    private RadioButton find_rb1;
+    private RadioButton find_rb2;
+    private RadioButton find_rb3;
+    private RadioButton find_rb4;
+    private RadioButton find_rb5;
+    private RadioButton find_rb6;
 
     public FindFragment() {
         // Required empty public constructor
@@ -47,12 +48,12 @@ public class FindFragment extends Fragment implements View.OnClickListener {
         scrollView = (HorizontalScrollView) view.findViewById(R.id.find_hscrollview);
         radioGroup = (RadioGroup) view.findViewById(R.id.find_rg);
         viewPager = (ViewPager) view.findViewById(R.id.find_viewpager);
-        view.findViewById(R.id.find_rb1).setOnClickListener(this);
-        view.findViewById(R.id.find_rb2).setOnClickListener(this);
-        view.findViewById(R.id.find_rb3).setOnClickListener(this);
-        view.findViewById(R.id.find_rb4).setOnClickListener(this);
-        view.findViewById(R.id.find_rb5).setOnClickListener(this);
-        view.findViewById(R.id.find_rb6).setOnClickListener(this);
+        (find_rb1 = (RadioButton) view.findViewById(R.id.find_rb1)).setOnClickListener(this);
+        (find_rb2 = (RadioButton) view.findViewById(R.id.find_rb2)).setOnClickListener(this);
+        (find_rb3 = (RadioButton) view.findViewById(R.id.find_rb3)).setOnClickListener(this);
+        (find_rb4 = (RadioButton) view.findViewById(R.id.find_rb4)).setOnClickListener(this);
+        (find_rb5 = (RadioButton) view.findViewById(R.id.find_rb5)).setOnClickListener(this);
+        (find_rb6 = (RadioButton) view.findViewById(R.id.find_rb6)).setOnClickListener(this);
         adapter = new FindPagerAdapter(getFragmentManager());
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(adapter.TAB_COUNT);//缓存数据
@@ -69,7 +70,6 @@ public class FindFragment extends Fragment implements View.OnClickListener {
         return d.getWidth() / 2;//屏幕宽度的一半
     }
 
-
     private void initEvent() {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -79,8 +79,60 @@ public class FindFragment extends Fragment implements View.OnClickListener {
                 int left = rb.getLeft();//相对父控件的左边位置
                 int leftScreen = left - scrollX;
                 scrollView.smoothScrollBy((leftScreen - screenHalf + rb.getWidth() / 2), 0);
+
             }
         });
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case FindPagerAdapter.TAB_FINDCONTENT_0:
+                        radioGroup.check(R.id.find_rb1);
+                        setFragmentIndex(FindPagerAdapter.TAB_FINDCONTENT_0);
+                        break;
+                    case FindPagerAdapter.TAB_FINDCONTENT_1:
+                        radioGroup.check(R.id.find_rb2);
+                        setFragmentIndex(FindPagerAdapter.TAB_FINDCONTENT_1);
+                        break;
+                    case FindPagerAdapter.TAB_FINDCONTENT_2:
+                        radioGroup.check(R.id.find_rb3);
+                        setFragmentIndex(FindPagerAdapter.TAB_FINDCONTENT_2);
+                        break;
+                    case FindPagerAdapter.TAB_FINDCONTENT_3:
+                        radioGroup.check(R.id.find_rb4);
+                        setFragmentIndex(FindPagerAdapter.TAB_FINDCONTENT_3);
+                        break;
+                    case FindPagerAdapter.TAB_FINDCONTENT_4:
+                        radioGroup.check(R.id.find_rb5);
+                        setFragmentIndex(FindPagerAdapter.TAB_FINDCONTENT_4);
+                        break;
+                    case FindPagerAdapter.TAB_FINDCONTENT_5:
+                        radioGroup.check(R.id.find_rb6);
+                        setFragmentIndex(FindPagerAdapter.TAB_FINDCONTENT_5);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    private void setFragmentIndex(int fragmentIndex) {
+        FindContentFragment findContentFragment;
+        viewPager.setCurrentItem(fragmentIndex);
+        findContentFragment = (FindContentFragment) adapter.getItem(fragmentIndex);
+        findContentFragment.setCagegory(fragmentIndex + 1);
     }
 
     @Override
@@ -88,34 +140,22 @@ public class FindFragment extends Fragment implements View.OnClickListener {
         FindContentFragment findContentFragment;
         switch (v.getId()) {
             case R.id.find_rb1:
-                viewPager.setCurrentItem(FindPagerAdapter.TAB_FINDCONTENT_0);
-                findContentFragment = (FindContentFragment) adapter.getItem(FindPagerAdapter.TAB_FINDCONTENT_0);
-                findContentFragment.setCagegory(FindPagerAdapter.TAB_FINDCONTENT_0 + 1);
+                setFragmentIndex(FindPagerAdapter.TAB_FINDCONTENT_0);
                 break;
             case R.id.find_rb2:
-                viewPager.setCurrentItem(FindPagerAdapter.TAB_FINDCONTENT_1);
-                findContentFragment = (FindContentFragment) adapter.getItem(FindPagerAdapter.TAB_FINDCONTENT_1);
-                findContentFragment.setCagegory(FindPagerAdapter.TAB_FINDCONTENT_1 + 1);
+                setFragmentIndex(FindPagerAdapter.TAB_FINDCONTENT_1);
                 break;
             case R.id.find_rb3:
-                viewPager.setCurrentItem(FindPagerAdapter.TAB_FINDCONTENT_2);
-                findContentFragment = (FindContentFragment) adapter.getItem(FindPagerAdapter.TAB_FINDCONTENT_2);
-                findContentFragment.setCagegory(FindPagerAdapter.TAB_FINDCONTENT_2 + 1);
+                setFragmentIndex(FindPagerAdapter.TAB_FINDCONTENT_2);
                 break;
             case R.id.find_rb4:
-                viewPager.setCurrentItem(FindPagerAdapter.TAB_FINDCONTENT_3);
-                findContentFragment = (FindContentFragment) adapter.getItem(FindPagerAdapter.TAB_FINDCONTENT_3);
-                findContentFragment.setCagegory(FindPagerAdapter.TAB_FINDCONTENT_3 + 1);
+                setFragmentIndex(FindPagerAdapter.TAB_FINDCONTENT_3);
                 break;
             case R.id.find_rb5:
-                viewPager.setCurrentItem(FindPagerAdapter.TAB_FINDCONTENT_4);
-                findContentFragment = (FindContentFragment) adapter.getItem(FindPagerAdapter.TAB_FINDCONTENT_4);
-                findContentFragment.setCagegory(FindPagerAdapter.TAB_FINDCONTENT_4 + 1);
+                setFragmentIndex(FindPagerAdapter.TAB_FINDCONTENT_4);
                 break;
             case R.id.find_rb6:
-                viewPager.setCurrentItem(FindPagerAdapter.TAB_FINDCONTENT_5);
-                findContentFragment = (FindContentFragment) adapter.getItem(FindPagerAdapter.TAB_FINDCONTENT_5);
-                findContentFragment.setCagegory(FindPagerAdapter.TAB_FINDCONTENT_5 + 1);
+                setFragmentIndex(FindPagerAdapter.TAB_FINDCONTENT_5);
                 break;
 
         }

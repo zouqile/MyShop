@@ -48,18 +48,23 @@ public class MainTabActivity extends FragmentActivity {
         ImageLoader.getInstance().init(configuration);
     }
 
-    private static final int CARTFRAGMENT = 0;
-    private static final int CATEGORYFRAGMENT = 1;
-    private static final int FINDFRAGMENT = 2;
-    private static final int HOMEFRAGMENT = 3;
-    private static final int MINEFRAGMENT = 4;
+    private static final int CARTF_RAGMENT = 0;
+    private static final int CATEGORYF_RAGMENT = 1;
+    private static final int FIND_FRAGMENT = 2;
+    private static final int HOMEF_RAGMENT = 3;
+    private static final int MINEF_RAGMENT = 4;
+    private CartFragment cartFragment;
+    private CategoryFragment categoryFragment;
+    private FindFragment findFragment;
+    private HomeFragment homeFragment;
+    private MineFragment mineFragment;
 
     private void initFragment() {
-        CartFragment cartFragment = new CartFragment();
-        CategoryFragment categoryFragment = new CategoryFragment();
-        FindFragment findFragment = new FindFragment();
-        HomeFragment homeFragment = new HomeFragment();
-        MineFragment mineFragment = new MineFragment();
+        cartFragment = new CartFragment();
+        categoryFragment = new CategoryFragment();
+        findFragment = new FindFragment();
+        homeFragment = new HomeFragment();
+        mineFragment = new MineFragment();
         fragments = new ArrayList<Fragment>() {
         };
         fragments.add(cartFragment);
@@ -93,6 +98,9 @@ public class MainTabActivity extends FragmentActivity {
             }
         }
         transaction.commit();
+        if (CARTF_RAGMENT == index) {
+            cartFragment.initData();
+        }
     }
 
 
@@ -104,31 +112,31 @@ public class MainTabActivity extends FragmentActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 switch (checkedId) {
                     case R.id.main_rb_home:
-                        switchFragment(HOMEFRAGMENT);
+                        switchFragment(HOMEF_RAGMENT);
                         // fragmentTransaction.replace(R.id.main_content_FrameLayout, homeFragment);
                         // fragmentTransaction.addToBackStack(null);
                         // fragmentTransaction.commit();
                         break;
                     case R.id.main_rb_category:
-                        switchFragment(CATEGORYFRAGMENT);
+                        switchFragment(CATEGORYF_RAGMENT);
                         // fragmentTransaction.replace(R.id.main_content_FrameLayout, categoryFragment);
                         //fragmentTransaction.addToBackStack(null);
                         //fragmentTransaction.commit();
                         break;
                     case R.id.main_rb_find:
-                        switchFragment(FINDFRAGMENT);
+                        switchFragment(FIND_FRAGMENT);
                         // fragmentTransaction.replace(R.id.main_content_FrameLayout, findFragment);
                         //fragmentTransaction.addToBackStack(null);
                         // fragmentTransaction.commit();
                         break;
                     case R.id.main_rb_cart:
-                        switchFragment(CARTFRAGMENT);
+                        switchFragment(CARTF_RAGMENT);
                         //fragmentTransaction.replace(R.id.main_content_FrameLayout, cartFragment);
                         //fragmentTransaction.addToBackStack(null);
                         //fragmentTransaction.commit();
                         break;
                     case R.id.main_rb_mine:
-                        switchFragment(MINEFRAGMENT);
+                        switchFragment(MINEF_RAGMENT);
                         // fragmentTransaction.replace(R.id.main_content_FrameLayout, mineFragment);
                         // fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();

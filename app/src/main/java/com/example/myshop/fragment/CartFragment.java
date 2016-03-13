@@ -69,7 +69,7 @@ public class CartFragment extends Fragment {
         cartlistview.setAdapter(cartAdapter);
     }
 
-    private void initData() {
+    public void initData() {
         cartAdapter.setCarts(cartService.getAll());
     }
 
