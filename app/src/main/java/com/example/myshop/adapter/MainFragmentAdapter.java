@@ -30,15 +30,15 @@ public class MainFragmentAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case TAB_HOME:
-                return new HomeFragment();
+                return HomeFragment.GetInstance();
             case TAB_CATEGORY:
-                return new CategoryFragment();
+                return CategoryFragment.GetInstance();
             case TAB_FIND:
-                return new FindFragment();
+                return FindFragment.GetInstance();
             case TAB_CART:
-                return new CartFragment();
+                return CartFragment.GetInstance();
             case TAB_MINE:
-                return new MineFragment();
+                return MineFragment.GetInstance();
         }
         return new HomeFragment();
     }

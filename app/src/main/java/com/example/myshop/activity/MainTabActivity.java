@@ -19,6 +19,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
 
+import cn.bmob.v3.Bmob;
+
 /**
  * 应用FragmentTabHost的首页
  */
@@ -30,11 +32,15 @@ public class MainTabActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 初始化 Bmob SDK
+        // 使用时请将第二个参数Application ID替换成你在Bmob服务器端创建的Application ID
+        Bmob.initialize(this, "123");
         setContentView(R.layout.activity_main_tab);
         radioGroup = (RadioGroup) findViewById(R.id.main_rg);
         init();
         initFragment();
         initEvent();
+        radioGroup.check(R.id.main_rb_home);
     }
 
     private void init() {

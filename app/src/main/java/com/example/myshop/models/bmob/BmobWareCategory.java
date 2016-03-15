@@ -1,28 +1,21 @@
-package com.example.myshop.models;
+package com.example.myshop.models.bmob;
 
-import java.io.Serializable;
+import cn.bmob.v3.BmobObject;
 
 /**
- * Created by zouqile on 2016-03-02.
- * 商品的分类（图书，家用电器等）
+ * Created by zouqile on 2016-03-14.
  */
-public class WareCategory implements Serializable {
-
-    public WareCategory() {
+public class BmobWareCategory extends BmobObject {
+    public BmobWareCategory() {
     }
 
-    public WareCategory(String name) {
-        this.name = name;
-    }
-
-    public WareCategory(int id, String name) {
+    public BmobWareCategory(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
     private int id;
     private String name;
-
 
     public int getId() {
         return id;
@@ -39,5 +32,4 @@ public class WareCategory implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
 }

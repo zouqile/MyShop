@@ -1,24 +1,33 @@
-package com.example.myshop.models;
+package com.example.myshop.models.bmob;
 
-import com.zhy.http.okhttp.utils.L;
-
-import java.io.Serializable;
+import cn.bmob.v3.BmobObject;
 
 /**
- * Created by zouqile on 2016-03-01.
- * 一个活动首页卡片的信息
+ * Created by zouqile on 2016-03-14.
  */
-public class CampaignCard implements Serializable {
-    public CampaignCard(int id, String title, String imgUrl) {
-        this.id = id;
-        this.title = title;
-        this.imgUrl = imgUrl;
-    }
-
+public class BmobCampaignCard extends BmobObject {
     private int id;
     private String title;
     private String imgUrl;
 
+    private int cid;
+    private String type;
+
+    public int getCid() {
+        return cid;
+    }
+
+    public void setCid(int cid) {
+        this.cid = cid;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public int getId() {
         return id;

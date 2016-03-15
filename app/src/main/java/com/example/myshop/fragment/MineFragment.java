@@ -22,6 +22,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         // Required empty public constructor
     }
 
+    public static MineFragment GetInstance() {
+        MineFragment fragment = new MineFragment();
+        return fragment;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -1,6 +1,7 @@
 package com.example.myshop.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -32,15 +33,26 @@ import okhttp3.Call;
 public class FindContentFragment extends Fragment {
 
 
+    private Context context;
     private RecyclerView recyclerView;
     private MaterialRefreshLayout mRefreshLaout;
     private CategoryWareRecyclerAdapter wareAdapter;//商品的适配器
     private WareService service;
 
+    private void setContext(Context context) {
+        this.context = context;
+    }
+
 
     public FindContentFragment() {
-        wareAdapter = new CategoryWareRecyclerAdapter(new ArrayList<Ware>(), getContext());
-        service = new WareService(getActivity());
+    }
+
+    public static FindContentFragment GetInstance(Context context) {
+        FindContentFragment fragment = new FindContentFragment();
+        fragment.wareAdapter = new CategoryWareRecyclerAdapter(new ArrayList<Ware>(), context);
+        fragment.service = new WareService(context);
+        fragment.setContext(context);
+        return fragment;
     }
 
     @Override

@@ -7,6 +7,7 @@ import java.io.Serializable;
  * 购物车的一个商品
  */
 public class WareCart extends Ware implements Serializable {
+
     private int count;
     private boolean isChecked = true;
 

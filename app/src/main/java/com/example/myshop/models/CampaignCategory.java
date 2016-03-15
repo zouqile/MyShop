@@ -7,8 +7,12 @@ import java.io.Serializable;
  * 首页一个活动的分类
  */
 public class CampaignCategory implements Serializable {
+    public CampaignCategory(int id, String title) {
+        this.id = id;
+        this.title = title;
+    }
 
-    private Long id;
+    private int id;
     private String title;
     private CampaignCard cpOne;
     private CampaignCard cpTwo;
@@ -40,11 +44,11 @@ public class CampaignCategory implements Serializable {
     }
 
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

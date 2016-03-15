@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,17 +24,25 @@ import com.cjj.MaterialRefreshListener;
 import com.example.myshop.R;
 import com.example.myshop.activity.WareDetailActivity;
 import com.example.myshop.adapter.CategoryWareRecyclerAdapter;
+import com.example.myshop.callback.BmobCallback;
 import com.example.myshop.callback.ListWareCallBack;
 import com.example.myshop.callback.ListWareCategoryCallBack;
 import com.example.myshop.common.Contants;
+import com.example.myshop.common.ServiceUrl;
 import com.example.myshop.models.Ware;
 import com.example.myshop.models.WareCategory;
+import com.example.myshop.models.bmob.BmobWare;
+import com.example.myshop.service.BmobService;
 import com.example.myshop.service.WareService;
 import com.example.myshop.view.CategoryMenuListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
 import okhttp3.Call;
 
 /**
@@ -50,6 +61,10 @@ public class CategoryFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static CategoryFragment GetInstance() {
+        CategoryFragment fragment = new CategoryFragment();
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,6 +87,7 @@ public class CategoryFragment extends Fragment {
         refreshData();//第一次加载商品数据
         return view;
     }
+
 
     private void initEvent() {
         wareAdapter.setOnWareClickListener(new CategoryWareRecyclerAdapter.OnWareClickListener() {
@@ -96,7 +112,6 @@ public class CategoryFragment extends Fragment {
                 adapter.setIndex(position);
             }
         });
-
     }
 
     private void initMenu() {

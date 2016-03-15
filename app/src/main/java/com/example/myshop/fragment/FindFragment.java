@@ -1,6 +1,7 @@
 package com.example.myshop.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -39,6 +40,11 @@ public class FindFragment extends Fragment implements View.OnClickListener {
         // Required empty public constructor
     }
 
+    public static FindFragment GetInstance() {
+        FindFragment fragment = new FindFragment();
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,12 +60,18 @@ public class FindFragment extends Fragment implements View.OnClickListener {
         (find_rb4 = (RadioButton) view.findViewById(R.id.find_rb4)).setOnClickListener(this);
         (find_rb5 = (RadioButton) view.findViewById(R.id.find_rb5)).setOnClickListener(this);
         (find_rb6 = (RadioButton) view.findViewById(R.id.find_rb6)).setOnClickListener(this);
-        adapter = new FindPagerAdapter(getFragmentManager());
+        adapter = new FindPagerAdapter(getFragmentManager(), getContext());
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(adapter.TAB_COUNT);//缓存数据
         initEvent();
         screenHalf = getScreenHalf();
+        initData();
         return view;
+    }
+
+    private void initData() {
+        radioGroup.check(R.id.find_rb1);
+        setFragmentIndex(FindPagerAdapter.TAB_FINDCONTENT_0);
     }
 
 
@@ -179,14 +191,17 @@ public class FindFragment extends Fragment implements View.OnClickListener {
         private FindContentFragment find4;
         private FindContentFragment find5;
 
-        public FindPagerAdapter(FragmentManager fm) {
+        private Context context;
+
+        public FindPagerAdapter(FragmentManager fm, Context context) {
             super(fm);
-            find0 = new FindContentFragment();
-            find1 = new FindContentFragment();
-            find2 = new FindContentFragment();
-            find3 = new FindContentFragment();
-            find4 = new FindContentFragment();
-            find5 = new FindContentFragment();
+            this.context = context;
+            find0 = FindContentFragment.GetInstance(context);
+            find1 = FindContentFragment.GetInstance(context);
+            find2 = FindContentFragment.GetInstance(context);
+            find3 = FindContentFragment.GetInstance(context);
+            find4 = FindContentFragment.GetInstance(context);
+            find5 = FindContentFragment.GetInstance(context);
         }
 
         @Override

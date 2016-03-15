@@ -16,8 +16,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         login_back_img = (ImageView) findViewById(R.id.login_back_img);
-
-
+        login_back_img.setOnClickListener(this);
     }
 
     @Override

@@ -22,14 +22,14 @@ import java.util.List;
  */
 public class CategoryWareRecyclerAdapter extends RecyclerView.Adapter<CategoryWareRecyclerAdapter.CatgoryViewHolder> {
 
-    private List<Ware> wares = new ArrayList<>();
+    private List<Ware> wares;
     private LayoutInflater mInflater;
     private Context mContext;
     private LoadImgService imgService;
     private int pageSize = 10;
-    private long category_id = 1;
+    private int category_id = 1;
     private int currPage = 1;
-    private int totalPage = 2;
+    private int totalPage = 3;
     private OnWareClickListener onWareClickListener;
 
 
@@ -47,6 +47,9 @@ public class CategoryWareRecyclerAdapter extends RecyclerView.Adapter<CategoryWa
     }
 
     public void addWares(List<Ware> wares) {
+        if (null == wares) {
+            return;
+        }
         this.wares.addAll(wares);
         this.notifyDataSetChanged();
     }
@@ -59,7 +62,7 @@ public class CategoryWareRecyclerAdapter extends RecyclerView.Adapter<CategoryWa
         this.currPage = currPage;
     }
 
-    public long getCategory_id() {
+    public int getCategory_id() {
         return category_id;
     }
 
@@ -71,7 +74,7 @@ public class CategoryWareRecyclerAdapter extends RecyclerView.Adapter<CategoryWa
         this.totalPage = totalPage;
     }
 
-    public void setCategory_id(long category_id) {
+    public void setCategory_id(int category_id) {
         if (this.category_id != category_id) {
             this.currPage = 1;
         }
@@ -113,6 +116,9 @@ public class CategoryWareRecyclerAdapter extends RecyclerView.Adapter<CategoryWa
 
     @Override
     public int getItemCount() {
+        if (null == wares) {
+            return 0;
+        }
         return wares.size();
     }
 

@@ -17,7 +17,7 @@ public abstract class ListCampaignCategoryCallBack extends Callback<List<Campaig
     @Override
     public List<CampaignCategory> parseNetworkResponse(Response response) throws Exception {
         String string = response.body().string();
-        List<CampaignCategory> list =new Gson().fromJson(string,  new TypeToken<List<CampaignCategory>>() {
+        List<CampaignCategory> list = new Gson().fromJson(string, new TypeToken<List<CampaignCategory>>() {
         }.getType());
         return list;
     }

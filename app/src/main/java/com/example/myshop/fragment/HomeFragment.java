@@ -22,10 +22,12 @@ import android.widget.TextView;
 
 import com.example.myshop.R;
 import com.example.myshop.adapter.HomeCatgoryRecyclerAdapter;
+import com.example.myshop.callback.BmobCallback;
 import com.example.myshop.callback.ListCampaignCategoryCallBack;
 import com.example.myshop.common.WrappingLinearLayoutManager;
 import com.example.myshop.models.CampaignCard;
 import com.example.myshop.models.CampaignCategory;
+import com.example.myshop.service.BmobService;
 import com.example.myshop.service.WareService;
 
 import java.lang.ref.WeakReference;
@@ -54,6 +56,10 @@ public class HomeFragment extends Fragment {
 
     public HomeFragment() {
         // Required empty public constructor
+    }
+    public static HomeFragment GetInstance() {
+        HomeFragment fragment = new HomeFragment();
+        return fragment;
     }
 
 
@@ -152,7 +158,9 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onResponse(List<CampaignCategory> response) {
-                initRecyclerViewData(response);
+                if (null != response) {
+                    initRecyclerViewData(response);
+                }
             }
         });
     }

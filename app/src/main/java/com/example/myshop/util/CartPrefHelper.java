@@ -31,14 +31,14 @@ public class CartPrefHelper {
 
 
     private void put(WareCart cart) {
-        WareCart temp = datas.get(cart.getId().intValue());
+        WareCart temp = datas.get(cart.getId());
         if (temp != null) {
             temp.setCount(temp.getCount() + 1);
         } else {
             temp = cart;
             temp.setCount(1);
         }
-        datas.put(cart.getId().intValue(), temp);
+        datas.put(cart.getId(), temp);
         commit();
     }
 
@@ -50,12 +50,12 @@ public class CartPrefHelper {
 
     public void update(WareCart cart) {
 
-        datas.put(cart.getId().intValue(), cart);
+        datas.put(cart.getId(), cart);
         commit();
     }
 
     public void delete(WareCart cart) {
-        datas.delete(cart.getId().intValue());
+        datas.delete(cart.getId());
         commit();
     }
 
@@ -94,7 +94,7 @@ public class CartPrefHelper {
             for (WareCart cart :
                     carts) {
 
-                datas.put(cart.getId().intValue(), cart);
+                datas.put(cart.getId(), cart);
             }
         }
 

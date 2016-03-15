@@ -1,24 +1,15 @@
-package com.example.myshop.models;
+package com.example.myshop.models.bmob;
 
-import java.io.Serializable;
+import cn.bmob.v3.BmobObject;
 
 /**
- * Created by zouqile on 2016-03-06.
- * 单个商品
+ * Created by zouqile on 2016-03-14.
  */
-public class Ware implements Serializable {
-
-    private int id;
-    private String name;
-    private String imgUrl;
-    private String description;
-    private Float price;
-    private int categoryId;
-
-    public Ware() {
+public class BmobWare extends BmobObject {
+    public BmobWare() {
     }
 
-    public Ware(int id, String name, String imgUrl, String description, Float price, int categoryId) {
+    public BmobWare(int id, String name, String imgUrl, String description, Float price, int categoryId) {
         this.id = id;
         this.name = name;
         this.imgUrl = imgUrl;
@@ -26,6 +17,13 @@ public class Ware implements Serializable {
         this.price = price;
         this.categoryId = categoryId;
     }
+
+    private int categoryId;
+    private int id;
+    private String name;
+    private String imgUrl;
+    private String description;
+    private Float price;
 
     public int getCategoryId() {
         return categoryId;
